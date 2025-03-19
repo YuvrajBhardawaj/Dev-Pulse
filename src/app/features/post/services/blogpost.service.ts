@@ -1,13 +1,15 @@
 import { inject, Injectable } from '@angular/core';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { BlogPostHelper } from '../../../core/helpers/blogpost-helper';
+import { Observable } from 'rxjs';
+import { BlogPost } from '../models/blogpost.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogpostService {
   firestore = inject(Firestore);
-  createBlogPost(title: string, content: string){
+  createBlogPost(title: string, content: string, coverImageUrl: string){
       //addDoc
   
       // const postCollectionRef = collection(this.firestore, 'blog-posts');
@@ -22,7 +24,14 @@ export class BlogpostService {
       setDoc(postCollectionRef, {
         title : title,
         content : content,
+        coverImageUrl : coverImageUrl,
         publishedOn : new Date()
       })
+  }
+  getBLogPosts(): Observable<BlogPost[]>{
+    const blogPostCollectionRef = collection(this.firestore, 'blog-posts')
+    return collectionData(blogPostCollectionRef,{
+      idField: 'slug'
+    }) as Observable<BlogPost[]>
   }
 }

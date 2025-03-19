@@ -1,6 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
@@ -9,6 +8,7 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment.development';
 import { provideHttpClient } from '@angular/common/http';
 import { provideMarkdown } from 'ngx-markdown'
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()), 
     provideFirestore(() => getFirestore()), 
     provideStorage(() => getStorage()),
-    provideMarkdown()
+    provideMarkdown(),
+    provideStorage(()=>getStorage())
   ]
 };

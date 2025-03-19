@@ -7,5 +7,5 @@ export const environment = {
         storageBucket: "dev-pulse-development-a29c8.firebasestorage.app",
         messagingSenderId: "386581255643",
         appId: "1:386581255643:web:a8bf4a3df07eac8be2c3fe"
-      }
+      },
 };

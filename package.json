@@ -19,6 +19,8 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@cloudinary/ng": "^2.1.2",
+    "@cloudinary/url-gen": "^1.21.0",
     "@tailwindcss/postcss": "^4.0.14",
     "marked": "^15.0.4",
     "ngx-markdown": "^19.0.0",

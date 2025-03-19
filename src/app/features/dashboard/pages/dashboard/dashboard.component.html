@@ -1,0 +1,25 @@
+<div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-3xl mt-8 mb-4 font-extrabold">Dashboard</h1>
+    <div class="mt-4">
+        <div class="grid grid-cols-3 gap-4">
+            <app-dashboard-statistics [value]="totalBlogPosts()" [labelDescription]="'Posts'"></app-dashboard-statistics>
+        </div>
+        <div class="mt-4">
+            <ul>
+                @for (blogPost of blogPosts(); track blogPost.slug) {
+                    <li class="grid grid-cols-5 p-4 border border-neutral-200">
+                        <div class="flex flex-col col-span-4">
+                            <h3 class="text-indigo-500 font-bold text-xl">{{blogPost.title}}</h3>
+                            <div class="text-neutral-900 text-sm">
+                                <span>Published on: {{converTimeStampToDate(blogPost.publishedOn) | date: "dd-MM-yyy"}}</span>
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex items-center justify-end">
+                            <a [routerLink]="['/edit-post/',blogPost.slug]">Edit</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
