@@ -1,0 +1,63 @@
+<form [formGroup]="editPostForm" class="max-w-7xl mx-auto px-4" (ngSubmit)="onSubmit()">
+    <h1 class="text-3xl mt-8 mb-4 font-extrabold">Create Post</h1>
+    <div class="mt-4">
+        <label for="slug" class="w-full">Slug</label>
+        <input type="text" id="slug" formControlName="slug" class="bg-neutral-100 w-full px-4 py-2 mt-2" placeholder="Enter The Title For Your Post" autocomplete="off" readonly>
+    </div>
+    <div class="mt-4">
+        <label for="title" class="w-full">Title</label>
+        <input type="text" id="title" formControlName="title" class="bg-neutral-100 w-full px-4 py-2 mt-2" placeholder="Enter The Title For Your Post" autocomplete="off">
+        @if (title.invalid && (title.dirty || title.touched)) {
+            @if (title.hasError('required')) {
+                <p class="text-red-700 text-sm mt-1">Title is required</p>
+            }
+            @if (title.hasError('minlength')) {
+                <p class="text-red-700 text-sm mt-1">Title must be atleast 6 characters</p>
+            }
+            @if (title.hasError('maxlength')) {
+                <p class="text-red-700 text-sm mt-1">Title must not exceed 100 characters</p>
+            }
+        }
+    </div>
+    <div class="mt-4">
+        <label for="content" class="w-full">Content</label>
+        <div class="flex gap-4">
+            <textarea
+             type="text" 
+             id="content" 
+             formControlName="content" 
+             class="bg-neutral-100 w-full px-4 py-2 mt-2 h-[200px]" 
+             placeholder="Post Content" 
+             autocomplete="off"
+             (keyup)="onContentChange()">
+            </textarea>
+            <div class="bg-neutral-100 w-full px-4 py-2 mt-2 h-[200px] blog-content">
+                <markdown [data]="contentData()"/>
+            </div>
+        </div>
+        
+        @if (content.invalid && (content.dirty || content.touched)) {
+
+            @if (content.hasError('required')) {
+                <p class="text-red-700 text-sm mt-1">Content is required</p>
+            }
+
+            @if (content.hasError('maxlength')) {
+                <p class="text-red-700 text-sm mt-1">Content must not exceed 3000 characters</p>
+            }
+        }
+    </div>
+    <div class="mt-4">
+        <input type="file" class="hidden" (change)="onCoverImageSelected(coverImageFileInput)" #coverImageFileInput>
+        <button class="border rounded px-4 py-2" (click)="coverImageFileInput.click()">Add Cover Image</button>
+    </div>
+    @if(editPostForm.getRawValue().coverImageUrl){
+        <div class="mt-4">
+            <img [src]="editPostForm.getRawValue().coverImageUrl" class="w-[200px]" alt="">
+        </div>
+    }
+    <div class="mt-4 flex gap-4">
+        <button type="submit" [disabled]="editPostForm.invalid" class="bg-indigo-500 cursor-pointer text-white px-4 p-2 font-bold rounded-4xl disabled:opacity-50 disabled:cursor-not-allowed">Publish</button>
+        <button (click)="onDelete(editPostForm.getRawValue().slug)" class="bg-red-500 cursor-pointer text-white px-4 p-2 font-bold rounded-4xl">Delete</button>
+    </div>
+</form>
